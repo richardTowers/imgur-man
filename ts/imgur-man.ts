@@ -12,7 +12,7 @@
 
 	for(var i = 0; i < width; i += 20) {
 		var dot = new fabric.Circle({
-			top: 20,
+			top: height/2,
 			left: i,
 			radius: 5,
 			fill: '#0f0'
@@ -26,7 +26,7 @@
 		img = oImg;
 		canvas.add(img);
 	}, {
-		top: 20,
+		top: height/2,
 		left: leftPos,
 		scaleX: 0.3,
 		scaleY: 0.3
