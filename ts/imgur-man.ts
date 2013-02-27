@@ -22,7 +22,7 @@
 
 	var img;
 	var leftPos = width - 20;
-	fabric.Image.fromURL('/img/imguraffe.gif', function(oImg) {
+	fabric.Image.fromURL('img/imguraffe.gif', function(oImg) {
 		img = oImg;
 		canvas.add(img);
 	}, {
