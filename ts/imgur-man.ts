@@ -15,7 +15,7 @@
 			top: 20,
 			left: i,
 			radius: 5,
-			fill: '#ff0'
+			fill: '#0f0'
 		});
 		canvas.add(dot);
 	}
