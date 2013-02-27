@@ -20,6 +20,23 @@
 		canvas.add(dot);
 	}
 
-	canvas.renderAll();
+	var img;
+	var leftPos = width - 20;
+	fabric.Image.fromURL('/img/imguraffe.gif', function(oImg) {
+		img = oImg;
+		canvas.add(img);
+	}, {
+		top: 20,
+		left: leftPos,
+		scaleX: 0.3,
+		scaleY: 0.3
+	});
+
+	window.setInterval(function () {
+		leftPos = leftPos < 0 ? width - 20 : leftPos - 20;
+		img.set('left', leftPos);
+		canvas.renderAll();
+	}, 500);
+
 
 })();
