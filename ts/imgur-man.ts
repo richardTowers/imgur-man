@@ -90,10 +90,12 @@
 
 	var tick = widthInBlocks / 2;
 	window.setInterval(function () {
-		pacmagurian.set('left', xScale/2 + tick * xScale);
-		canvas.renderAll();
+		pacmagurian.animate('left', xScale/2 + tick * xScale, {
+		  onChange: canvas.renderAll.bind(canvas)
+		});
+		//canvas.renderAll();
 		tick = tick < 0 ? widthInBlocks : tick - 1;
-	}, 200);
+	}, 1000);
 
 	canvas.renderAll();
 })();
