@@ -3,8 +3,44 @@
 (function () {
 	'use strict';
 
+	var board = [
+        '|--------------------------|',
+        '|............||............|',
+        '|o----.-----.||.----.-----o|',
+        '|.----.-----.||.----.-----.|',
+        '|..........................|',
+        '|.----.||.---||---.||.----.|',
+        '|.----.||.---||---.||.----.|',
+        '|......||....||....||......|',
+        '|----|.||--- || ---||.|----|',
+        '     |.||--- || ---||.|     ',
+        '     |.||     T    ||.|     ',
+	    '|----|.||  ------  ||.|----|',
+	    '      .    |eee |    .      ',
+	    '      .    ------    .      ',
+        '|----|.||          ||.|----|',
+        '     |.|| -------- ||.|     ',
+        '|----|.|| -------- ||.|----|',
+        '|............||............|',
+        '|.---|.-----.||.-----.|---.|',
+        '|.--||.-----.||.-----.||--.|',
+        '|o..||........P.......||..o|',
+        '|--.||.||.--------.||.||.--|',
+        '|--.||.||.--------.||.||.--|',
+        '|......||....||....||......|',
+        '|.----------.||.----------.|',
+        '|.----------.||.----------.|',
+        '|..........................|',
+        '|--------------------------|'
+    ];
+
+    var heightInBlocks = board.length;
+    var widthInBlocks = board[0].length;
+
+    window.console.log('height: ' + heightInBlocks);
+    window.console.log('width: ' + widthInBlocks);
+
 	// Initialize canvas:
-	// create a wrapper around native canvas element (with id="canvas")
 	var canvas = new fabric.StaticCanvas('canvas', { backgroundColor: '#000' });
 
 	var width = canvas.getWidth();
@@ -22,14 +58,15 @@
 
 	var img;
 	var leftPos = width - 20;
-	fabric.Image.fromURL('img/imguraffe.gif', function(oImg) {
+	fabric.Image.fromURL('img/Pacmagurian-full-open.png', function(oImg) {
 		img = oImg;
 		canvas.add(img);
 	}, {
 		top: height/2,
 		left: leftPos,
-		scaleX: 0.3,
-		scaleY: 0.3
+		flipX: true,
+		scaleX: 0.1,
+		scaleY: 0.1
 	});
 
 	window.setInterval(function () {
