@@ -12,10 +12,10 @@
         '|----|.||--- || ---||.|----|', 
         '     |.||--- || ---||.|     ', 
         '     |.||     T    ||.|     ', 
-        '|----|.||  ------  ||.|----|', 
-        '      .    |eee |    .      ', 
-        '      .    ------    .      ', 
-        '|----|.||          ||.|----|', 
+        '|----|.|| -------- ||.|----|', 
+        '      .   | eee  |   .      ', 
+        '|----|.|| -------- ||.|----|', 
+        '     |.||          ||.|     ', 
         '     |.|| -------- ||.|     ', 
         '|----|.|| -------- ||.|----|', 
         '|............||............|', 
@@ -32,37 +32,57 @@
     ];
     var heightInBlocks = board.length;
     var widthInBlocks = board[0].length;
-    window.console.log('height: ' + heightInBlocks);
-    window.console.log('width: ' + widthInBlocks);
+    var xScale = 25;
+    var yScale = 25;
+    var height = heightInBlocks * yScale;
+    var width = widthInBlocks * xScale;
     var canvas = new fabric.StaticCanvas('canvas', {
         backgroundColor: '#000'
     });
-    var width = canvas.getWidth();
-    var height = canvas.getHeight();
-    for(var i = 0; i < width; i += 20) {
-        var dot = new fabric.Circle({
-            top: height / 2,
-            left: i,
-            radius: 5,
-            fill: '#0f0'
-        });
-        canvas.add(dot);
+    canvas.setWidth(width);
+    canvas.setHeight(height);
+    var row;
+    var column;
+    for(row = 0; row < heightInBlocks; row++) {
+        for(column = 0; column < widthInBlocks; column++) {
+            var object;
+            switch(board[row][column]) {
+                case '|':
+                case '-': {
+                    canvas.add(new fabric.Rect({
+                        width: xScale,
+                        height: yScale,
+                        top: yScale / 2 + row * yScale,
+                        left: xScale / 2 + column * xScale,
+                        fill: '#800080'
+                    }));
+                    break;
+
+                }
+                case '.':
+                case 'o': {
+                    canvas.add(new fabric.Circle({
+                        radius: 4,
+                        top: yScale / 2 + row * yScale,
+                        left: xScale / 2 + column * xScale,
+                        fill: '#0f0'
+                    }));
+                    break;
+
+                }
+                case 'P': {
+                    fabric.Image.fromURL('img/opt/pacmagurian-open.png', function (oImg) {
+                        canvas.add(oImg);
+                    }, {
+                        flipX: true,
+                        top: yScale / 2 + row * yScale,
+                        left: xScale / 2 + column * xScale
+                    });
+                    break;
+
+                }
+            }
+        }
     }
-    var img;
-    var leftPos = width - 20;
-    fabric.Image.fromURL('img/Pacmagurian-full-open.png', function (oImg) {
-        img = oImg;
-        canvas.add(img);
-    }, {
-        top: height / 2,
-        left: leftPos,
-        flipX: true,
-        scaleX: 0.1,
-        scaleY: 0.1
-    });
-    window.setInterval(function () {
-        leftPos = leftPos < 0 ? width - 20 : leftPos - 20;
-        img.set('left', leftPos);
-        canvas.renderAll();
-    }, 500);
+    canvas.renderAll();
 })();
