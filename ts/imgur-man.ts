@@ -76,26 +76,29 @@
 						fill: '#0f0' }));
 					break;
 				case 'P':
-					fabric.Image.fromURL('img/opt/pacmagurian-open.png', function(oImg) {
-						pacmagurian = oImg;
-					  	canvas.add(oImg);
-					}, { 
-						flipX: true, 
-						top: yScale/2 + row*yScale, 
-						left: xScale/2 + column * xScale });
+					fabric.Image.fromURL(
+						'img/opt/pacmagurian-open.png',
+						function(oImg) {
+							pacmagurian = oImg;
+						  	canvas.add(oImg);
+						}, { 
+							flipX: true, 
+							top: yScale/2 + row*yScale, 
+							left: xScale/2 + column * xScale
+						}
+					);
 					break;
 			}
 		}
 	}
 
 	var tick = widthInBlocks / 2;
-	window.setInterval(function () {
-		pacmagurian.animate('left', xScale/2 + tick * xScale, {
-		  onChange: canvas.renderAll.bind(canvas)
-		});
-		//canvas.renderAll();
-		tick = tick < 0 ? widthInBlocks : tick - 1;
-	}, 1000);
+	var interval = window.setInterval(function () {
+		pacmagurian.set('left', xScale/2 + tick * xScale);
+		canvas.renderAll();
+		tick--;
+		if(tick < 6) { window.clearInterval(interval); }
+	}, 200);
 
 	canvas.renderAll();
 })();

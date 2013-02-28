@@ -88,11 +88,13 @@
         }
     }
     var tick = widthInBlocks / 2;
-    window.setInterval(function () {
-        pacmagurian.animate('left', xScale / 2 + tick * xScale, {
-            onChange: canvas.renderAll.bind(canvas)
-        });
-        tick = tick < 0 ? widthInBlocks : tick - 1;
-    }, 1000);
+    var interval = window.setInterval(function () {
+        pacmagurian.set('left', xScale / 2 + tick * xScale);
+        canvas.renderAll();
+        tick--;
+        if(tick < 6) {
+            window.clearInterval(interval);
+        }
+    }, 200);
     canvas.renderAll();
 })();
