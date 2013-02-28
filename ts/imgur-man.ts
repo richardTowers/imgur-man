@@ -54,11 +54,13 @@
 	var column;
 	for(row = 0; row < heightInBlocks; row++) {
 		for(column = 0; column < widthInBlocks; column++) {
-			var object;
+			var pacmagurian;
 			switch(board[row][column]) {
 				case '|':
 				case '-':
 					canvas.add(new fabric.Rect({
+						strokeWidth: 5,
+						stroke: '#000',
 						width: xScale, 
 						height: yScale, 
 						top: yScale/2 + row*yScale, 
@@ -75,7 +77,8 @@
 					break;
 				case 'P':
 					fabric.Image.fromURL('img/opt/pacmagurian-open.png', function(oImg) {
-					  canvas.add(oImg);
+						pacmagurian = oImg;
+					  	canvas.add(oImg);
 					}, { 
 						flipX: true, 
 						top: yScale/2 + row*yScale, 
@@ -85,6 +88,12 @@
 		}
 	}
 
+	var tick = widthInBlocks / 2;
+	window.setInterval(function () {
+		pacmagurian.set('left', xScale/2 + tick * xScale);
+		canvas.renderAll();
+		tick = tick < 0 ? widthInBlocks : tick - 1;
+	}, 200);
 
 	canvas.renderAll();
 })();
