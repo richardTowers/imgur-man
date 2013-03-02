@@ -8,6 +8,8 @@ module Pacmagurian {
 	var scale = 20;
 	var offset = scale / 2;
 
+	var scaleUp = (input : number) => input * scale + offset;
+
 	// Dark grey background
 	var backgroundColor = '#222';
 
@@ -173,8 +175,8 @@ module Pacmagurian {
 				position,
 				image || new fabric.Circle({
 					radius: 4,
-					top: position.row * scale + offset,
-					left: position.column * scale + offset,
+					top: scaleUp(position.row),
+					left: scaleUp(position.column),
 					fill: '#0f0'
 				})
 			);
@@ -186,8 +188,8 @@ module Pacmagurian {
 		constructor(position: Position) {
 			var imgElement = <HTMLImageElement>document.getElementById('downvote');
 			var imgInstance = new fabric.Image(imgElement, {
-				top: position.row * scale + offset,
-				left: position.column * scale + offset,
+				top: scaleUp(position.row),
+				left: scaleUp(position.column),
 				flipX: true
 			});
 			super(position, imgInstance);
@@ -202,8 +204,8 @@ module Pacmagurian {
 		move() {
 			this.position = new Position(this.position.row + this.ySpeed, this.position.column + this.xSpeed);
 			this.image.set({
-				top: this.position.row * scale + offset,
-				left: this.position.column * scale + offset,
+				top: scaleUp(this.position.row),
+				left: scaleUp(this.position.column)
 			});
 		}
 
@@ -215,8 +217,8 @@ module Pacmagurian {
 				position,
 				image || new fabric.Circle({
 					radius: 9,
-					top: position.row * scale + offset,
-					left: position.column * scale + offset,
+					top: scaleUp(position.row),
+					left: scaleUp(position.column),
 					fill: '#bbb'
 				})
 			);
@@ -227,8 +229,8 @@ module Pacmagurian {
 		constructor(position: Position) {
 			var imgElement = <HTMLImageElement>document.getElementById('pactard');
 			var imgInstance = new fabric.Image(imgElement, {
-				top: position.row * scale + offset,
-				left: position.column * scale + offset,
+				top: scaleUp(position.row),
+				left: scaleUp(position.column),
 				flipX: true
 			});
 			super(position, imgInstance);
@@ -239,8 +241,8 @@ module Pacmagurian {
 		constructor(position: Position) {
 			var imgElement = <HTMLImageElement>document.getElementById('pacmagurian');
 			var imgInstance = new fabric.Image(imgElement, {
-				top: position.row * scale + offset,
-				left: position.column * scale + offset,
+				top: scaleUp(position.row),
+				left: scaleUp(position.column),
 				flipX: true
 			});
 			super(position, imgInstance);
@@ -328,8 +330,6 @@ module Pacmagurian {
 
 	}
 }
-
-// *********** MAIN ***********
 
 (function () {
 	'use strict';

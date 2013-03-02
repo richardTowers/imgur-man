@@ -8,6 +8,9 @@ var Pacmagurian;
     'use strict';
     var scale = 20;
     var offset = scale / 2;
+    var scaleUp = function (input) {
+        return input * scale + offset;
+    };
     var backgroundColor = '#222';
     var mazeSource = [
         '############################', 
@@ -154,8 +157,8 @@ var Pacmagurian;
         function Food(position, image) {
                 _super.call(this, position, image || new fabric.Circle({
         radius: 4,
-        top: position.row * scale + offset,
-        left: position.column * scale + offset,
+        top: scaleUp(position.row),
+        left: scaleUp(position.column),
         fill: '#0f0'
     }));
         }
@@ -166,8 +169,8 @@ var Pacmagurian;
         function Powerup(position) {
             var imgElement = document.getElementById('downvote');
             var imgInstance = new fabric.Image(imgElement, {
-                top: position.row * scale + offset,
-                left: position.column * scale + offset,
+                top: scaleUp(position.row),
+                left: scaleUp(position.column),
                 flipX: true
             });
                 _super.call(this, position, imgInstance);
@@ -185,8 +188,8 @@ var Pacmagurian;
         Character.prototype.move = function () {
             this.position = new Position(this.position.row + this.ySpeed, this.position.column + this.xSpeed);
             this.image.set({
-                top: this.position.row * scale + offset,
-                left: this.position.column * scale + offset
+                top: scaleUp(this.position.row),
+                left: scaleUp(this.position.column)
             });
         };
         return Character;
@@ -196,8 +199,8 @@ var Pacmagurian;
         function Enemy(position, image) {
                 _super.call(this, position, image || new fabric.Circle({
         radius: 9,
-        top: position.row * scale + offset,
-        left: position.column * scale + offset,
+        top: scaleUp(position.row),
+        left: scaleUp(position.column),
         fill: '#bbb'
     }));
         }
@@ -208,8 +211,8 @@ var Pacmagurian;
         function Tard(position) {
             var imgElement = document.getElementById('pactard');
             var imgInstance = new fabric.Image(imgElement, {
-                top: position.row * scale + offset,
-                left: position.column * scale + offset,
+                top: scaleUp(position.row),
+                left: scaleUp(position.column),
                 flipX: true
             });
                 _super.call(this, position, imgInstance);
@@ -221,8 +224,8 @@ var Pacmagurian;
         function Player(position) {
             var imgElement = document.getElementById('pacmagurian');
             var imgInstance = new fabric.Image(imgElement, {
-                top: position.row * scale + offset,
-                left: position.column * scale + offset,
+                top: scaleUp(position.row),
+                left: scaleUp(position.column),
                 flipX: true
             });
                 _super.call(this, position, imgInstance);
