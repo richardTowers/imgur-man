@@ -220,15 +220,13 @@ module Pacmagurian {
 
 	class Tard extends Enemy {
 		constructor(position: Position) {
-			super(
-				position,
-				new fabric.Circle({
-					radius: 9,
-					top: position.row * scale + offset,
-					left: position.column * scale + offset,
-					fill: '#fff'
-				})
-			);
+			var imgElement = <HTMLImageElement>document.getElementById('pactard');
+			var imgInstance = new fabric.Image(imgElement, {
+				top: position.row * scale + offset,
+				left: position.column * scale + offset,
+				flipX: true
+			});
+			super(position, imgInstance);
 		}
 	}
 

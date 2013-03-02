@@ -201,12 +201,13 @@ var Pacmagurian;
     var Tard = (function (_super) {
         __extends(Tard, _super);
         function Tard(position) {
-                _super.call(this, position, new fabric.Circle({
-        radius: 9,
-        top: position.row * scale + offset,
-        left: position.column * scale + offset,
-        fill: '#fff'
-    }));
+            var imgElement = document.getElementById('pactard');
+            var imgInstance = new fabric.Image(imgElement, {
+                top: position.row * scale + offset,
+                left: position.column * scale + offset,
+                flipX: true
+            });
+                _super.call(this, position, imgInstance);
         }
         return Tard;
     })(Enemy);    
