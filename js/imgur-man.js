@@ -1,3 +1,76 @@
+var __extends = this.__extends || function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+}
+var Pacmagurian;
+(function (Pacmagurian) {
+    var xScale = 22;
+    var yScale = 22;
+    var Factory = (function () {
+        function Factory() { }
+        Factory.prototype.createGame = function (board) {
+            var heightInBlocks = board.length;
+            var widthInBlocks = board[0].length;
+            return new Game(null, [], []);
+        };
+        return Factory;
+    })();
+    Pacmagurian.Factory = Factory;    
+    var Game = (function () {
+        function Game(maze, foods, characters) {
+            this.maze = maze;
+            this.foods = foods;
+            this.characters = characters;
+        }
+        return Game;
+    })();    
+    var Position = (function () {
+        function Position(row, column) {
+            this.row = row;
+            this.column = column;
+        }
+        return Position;
+    })();    
+    var Maze = (function () {
+        function Maze() { }
+        Maze.prototype.isWall = function (position) {
+            return this.cells[position.row][position.column];
+        };
+        return Maze;
+    })();    
+    var Item = (function () {
+        function Item(position) {
+            this.position = position;
+        }
+        return Item;
+    })();    
+    var Food = (function (_super) {
+        __extends(Food, _super);
+        function Food() {
+            _super.apply(this, arguments);
+
+        }
+        return Food;
+    })(Item);    
+    var Character = (function (_super) {
+        __extends(Character, _super);
+        function Character() {
+            _super.apply(this, arguments);
+
+        }
+        return Character;
+    })(Item);    
+    var Player = (function (_super) {
+        __extends(Player, _super);
+        function Player() {
+            _super.apply(this, arguments);
+
+        }
+        return Player;
+    })(Character);    
+})(Pacmagurian || (Pacmagurian = {}));
+
 (function () {
     'use strict';
     var board = [
@@ -30,14 +103,16 @@
         '|..........................|', 
         '|--------------------------|'
     ];
+    var factory = new Pacmagurian.Factory();
+    factory.createGame(board);
     var heightInBlocks = board.length;
     var widthInBlocks = board[0].length;
-    var xScale = 25;
-    var yScale = 25;
+    var xScale = 22;
+    var yScale = 22;
     var height = heightInBlocks * yScale;
     var width = widthInBlocks * xScale;
     var canvas = new fabric.StaticCanvas('canvas', {
-        backgroundColor: '#000'
+        backgroundColor: '#222'
     });
     canvas.setWidth(width);
     canvas.setHeight(height);
@@ -51,7 +126,7 @@
                 case '-': {
                     canvas.add(new fabric.Rect({
                         strokeWidth: 5,
-                        stroke: '#000',
+                        stroke: '#222',
                         width: xScale,
                         height: yScale,
                         top: yScale / 2 + row * yScale,

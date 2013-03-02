@@ -1,5 +1,92 @@
 ///<reference path="fabricjs.d.ts"/>
 
+// *********** Types ***********
+
+module Pacmagurian {
+
+	// Let's go with a 22px by 22px grid.
+	var xScale = 22;
+	var yScale = 22;
+
+	export class Factory {
+
+		createGame(board : string[]): Game {
+
+			// Get the board size
+			var heightInBlocks = board.length;
+    		var widthInBlocks = board[0].length;
+
+
+
+			return new Game(null, [], []);
+
+		}
+
+	}
+
+	class Game {
+
+		private maze: Maze;
+		private foods: Food[];
+		private characters: Character[];
+
+		constructor(
+			maze: Maze,
+			foods: Food[],
+			characters: Character[])
+		{
+			this.maze = maze;
+			this.foods = foods;
+			this.characters = characters;
+		}
+	}
+
+	class Position {
+
+		row : number;
+		column : number;
+
+		constructor(row: number, column: number) {
+			this.row = row;
+			this.column = column;
+		}
+
+	}
+
+	class Maze {
+
+		private cells: bool[][];
+
+		isWall(position: Position): bool {
+			return this.cells[position.row][position.column];
+		}
+
+	}
+
+	class Item {
+
+		position : Position;
+
+		constructor(position: Position) {
+			this.position = position;
+		}
+	}
+
+	class Food extends Item {
+
+	}
+
+	class Character extends Item {
+
+	}
+
+	class Player extends Character {
+
+	}
+}
+
+// *********** MAIN ***********
+
 (function () {
 	'use strict';
 
@@ -34,18 +121,22 @@
         '|--------------------------|'
     ];
 
+	var factory = new Pacmagurian.Factory();
+
+	factory.createGame(board);
+
     var heightInBlocks = board.length;
     var widthInBlocks = board[0].length;
 
     // Let's go with a 20px by 20px grid.
-    var xScale = 25;
-    var yScale = 25;
+    var xScale = 22;
+    var yScale = 22;
 
     var height = heightInBlocks * yScale;
     var width = widthInBlocks * xScale;
 
 	// Initialize canvas:
-	var canvas = new fabric.StaticCanvas('canvas', { backgroundColor: '#000' });
+	var canvas = new fabric.StaticCanvas('canvas', { backgroundColor: '#222' });
 	canvas.setWidth(width);
 	canvas.setHeight(height);
 
@@ -60,10 +151,10 @@
 				case '-':
 					canvas.add(new fabric.Rect({
 						strokeWidth: 5,
-						stroke: '#000',
+						stroke: '#222',
 						width: xScale, 
 						height: yScale, 
-						top: yScale/2 + row*yScale, 
+						top: yScale/2 + row * yScale, 
 						left: xScale/2 + column * xScale, 
 						fill: '#800080' }));
 					break;
