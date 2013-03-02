@@ -10,6 +10,11 @@ module Pacmagurian {
 
 	var scaleUp = (input : number) => input * scale + offset;
 
+	var createImage = (id : string, options: fabric.IObjectOptions) => {
+		var imgElement = <HTMLImageElement>document.getElementById(id);
+		return new fabric.Image(imgElement, options);
+	}
+
 	// Dark grey background
 	var backgroundColor = '#222';
 
@@ -48,15 +53,7 @@ module Pacmagurian {
 		'############################'
 	];
 
-	enum Cell {
-		Empty,
-		Wall,
-		Food,
-		Powerup,
-		Enemy,
-		Tard,
-		Player,
-	}
+	enum Cell { Empty, Wall, Food, Powerup,	Enemy, Tard, Player }
 
 	class Board {
 
@@ -67,7 +64,6 @@ module Pacmagurian {
 
 		constructor(source : string[]) {
 			this.source = source;
-
 			this.heightInBlocks = source.length;
 			this.widthInBlocks = source[0].length;
 		}
@@ -98,8 +94,8 @@ module Pacmagurian {
 			canvas: fabric.IStaticCanvas,
 			board: Board,
 			foods: Food[],
-			characters: Character[])
-		{
+			characters: Character[]) {
+
 			this.canvas = canvas;
 			this.board = board;
 			this.foods = foods;
@@ -142,34 +138,25 @@ module Pacmagurian {
 	}
 
 	class Position {
-
 		row : number;
 		column : number;
-
 		constructor(row: number, column: number) {
 			this.row = row;
 			this.column = column;
 		}
-
 	}
 
 	class Item {
-
 		position : Position;
 		image : fabric.IObject;
-
 		constructor(position: Position, image? : fabric.IObject) {
 			this.position = position;
 			this.image = image;
 		}
-
 	}
 
 	class Food extends Item {
-
 		image : fabric.ICircle;
-
-
 		constructor(position: Position, image? : fabric.IObject) {
 			super(
 				position,
@@ -181,18 +168,16 @@ module Pacmagurian {
 				})
 			);
 		}
-
 	}
 
 	class Powerup extends Food {
 		constructor(position: Position) {
-			var imgElement = <HTMLImageElement>document.getElementById('downvote');
-			var imgInstance = new fabric.Image(imgElement, {
+			var image = createImage('downvote', {
 				top: scaleUp(position.row),
 				left: scaleUp(position.column),
 				flipX: true
 			});
-			super(position, imgInstance);
+			super(position, image);
 		}
 	}
 

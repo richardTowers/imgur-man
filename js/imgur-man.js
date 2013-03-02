@@ -11,6 +11,10 @@ var Pacmagurian;
     var scaleUp = function (input) {
         return input * scale + offset;
     };
+    var createImage = function (id, options) {
+        var imgElement = document.getElementById(id);
+        return new fabric.Image(imgElement, options);
+    };
     var backgroundColor = '#222';
     var mazeSource = [
         '############################', 
@@ -167,13 +171,12 @@ var Pacmagurian;
     var Powerup = (function (_super) {
         __extends(Powerup, _super);
         function Powerup(position) {
-            var imgElement = document.getElementById('downvote');
-            var imgInstance = new fabric.Image(imgElement, {
+            var image = createImage('downvote', {
                 top: scaleUp(position.row),
                 left: scaleUp(position.column),
                 flipX: true
             });
-                _super.call(this, position, imgInstance);
+                _super.call(this, position, image);
         }
         return Powerup;
     })(Food);    
