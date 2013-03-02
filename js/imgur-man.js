@@ -151,8 +151,8 @@ var Pacmagurian;
     })();    
     var Food = (function (_super) {
         __extends(Food, _super);
-        function Food(position) {
-                _super.call(this, position, new fabric.Circle({
+        function Food(position, image) {
+                _super.call(this, position, image || new fabric.Circle({
         radius: 4,
         top: position.row * scale + offset,
         left: position.column * scale + offset,
@@ -164,8 +164,13 @@ var Pacmagurian;
     var Powerup = (function (_super) {
         __extends(Powerup, _super);
         function Powerup(position) {
-                _super.call(this, position);
-            this.image.set('fill', '#f00');
+            var imgElement = document.getElementById('downvote');
+            var imgInstance = new fabric.Image(imgElement, {
+                top: position.row * scale + offset,
+                left: position.column * scale + offset,
+                flipX: true
+            });
+                _super.call(this, position, imgInstance);
         }
         return Powerup;
     })(Food);    

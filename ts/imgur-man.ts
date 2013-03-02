@@ -168,10 +168,10 @@ module Pacmagurian {
 		image : fabric.ICircle;
 
 
-		constructor(position: Position) {
+		constructor(position: Position, image? : fabric.IObject) {
 			super(
 				position,
-				new fabric.Circle({
+				image || new fabric.Circle({
 					radius: 4,
 					top: position.row * scale + offset,
 					left: position.column * scale + offset,
@@ -184,8 +184,13 @@ module Pacmagurian {
 
 	class Powerup extends Food {
 		constructor(position: Position) {
-			super(position);
-			this.image.set('fill', '#f00');
+			var imgElement = <HTMLImageElement>document.getElementById('downvote');
+			var imgInstance = new fabric.Image(imgElement, {
+				top: position.row * scale + offset,
+				left: position.column * scale + offset,
+				flipX: true
+			});
+			super(position, imgInstance);
 		}
 	}
 
