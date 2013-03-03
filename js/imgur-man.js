@@ -182,11 +182,16 @@ var Pacmagurian;
     })(Food);    
     var Character = (function (_super) {
         __extends(Character, _super);
-        function Character() {
-            _super.apply(this, arguments);
-
+        function Character(board, position, image) {
+                _super.call(this, position, image || new fabric.Circle({
+        radius: 9,
+        top: scaleUp(position.row),
+        left: scaleUp(position.column),
+        fill: '#bbb'
+    }));
             this.xSpeed = 0;
             this.ySpeed = 0;
+            this.board = board;
         }
         Character.prototype.move = function () {
             this.position = new Position(this.position.row + this.ySpeed, this.position.column + this.xSpeed);
@@ -199,8 +204,8 @@ var Pacmagurian;
     })(Item);    
     var Enemy = (function (_super) {
         __extends(Enemy, _super);
-        function Enemy(position, image) {
-                _super.call(this, position, image || new fabric.Circle({
+        function Enemy(board, position, image) {
+                _super.call(this, board, position, image || new fabric.Circle({
         radius: 9,
         top: scaleUp(position.row),
         left: scaleUp(position.column),
@@ -211,27 +216,27 @@ var Pacmagurian;
     })(Character);    
     var Tard = (function (_super) {
         __extends(Tard, _super);
-        function Tard(position) {
+        function Tard(board, position) {
             var imgElement = document.getElementById('pactard');
             var imgInstance = new fabric.Image(imgElement, {
                 top: scaleUp(position.row),
                 left: scaleUp(position.column),
                 flipX: true
             });
-                _super.call(this, position, imgInstance);
+                _super.call(this, board, position, imgInstance);
         }
         return Tard;
     })(Enemy);    
     var Player = (function (_super) {
         __extends(Player, _super);
-        function Player(position) {
+        function Player(board, position) {
             var imgElement = document.getElementById('pacmagurian');
             var imgInstance = new fabric.Image(imgElement, {
                 top: scaleUp(position.row),
                 left: scaleUp(position.column),
                 flipX: true
             });
-                _super.call(this, position, imgInstance);
+                _super.call(this, board, position, imgInstance);
         }
         return Player;
     })(Character);    
@@ -264,17 +269,17 @@ var Pacmagurian;
                     var position = new Position(row, column);
                     switch(cell) {
                         case Cell.Player: {
-                            characters.push(new Player(position));
+                            characters.push(new Player(board, position));
                             break;
 
                         }
                         case Cell.Enemy: {
-                            characters.push(new Enemy(position));
+                            characters.push(new Enemy(board, position));
                             break;
 
                         }
                         case Cell.Tard: {
-                            characters.push(new Tard(position));
+                            characters.push(new Tard(board, position));
                             break;
 
                         }

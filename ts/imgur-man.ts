@@ -183,8 +183,23 @@ module Pacmagurian {
 
 	class Character extends Item {
 		
+		board : Board;
+
 		xSpeed : number = 0;
 		ySpeed : number = 0;
+
+		constructor(board: Board, position: Position, image? : fabric.IObject) {
+			super(
+				position,
+				image || new fabric.Circle({
+					radius: 9,
+					top: scaleUp(position.row),
+					left: scaleUp(position.column),
+					fill: '#bbb'
+				})
+			);
+			this.board = board;
+		}
 
 		move() {
 			this.position = new Position(this.position.row + this.ySpeed, this.position.column + this.xSpeed);
@@ -197,8 +212,9 @@ module Pacmagurian {
 	}
 
 	class Enemy extends Character {
-		constructor(position: Position, image? : fabric.IObject) {
+		constructor(board: Board, position: Position, image? : fabric.IObject) {
 			super(
+				board,
 				position,
 				image || new fabric.Circle({
 					radius: 9,
@@ -211,26 +227,26 @@ module Pacmagurian {
 	}
 
 	class Tard extends Enemy {
-		constructor(position: Position) {
+		constructor(board: Board, position: Position) {
 			var imgElement = <HTMLImageElement>document.getElementById('pactard');
 			var imgInstance = new fabric.Image(imgElement, {
 				top: scaleUp(position.row),
 				left: scaleUp(position.column),
 				flipX: true
 			});
-			super(position, imgInstance);
+			super(board, position, imgInstance);
 		}
 	}
 
 	class Player extends Character {
-		constructor(position: Position) {
+		constructor(board: Board, position: Position) {
 			var imgElement = <HTMLImageElement>document.getElementById('pacmagurian');
 			var imgInstance = new fabric.Image(imgElement, {
 				top: scaleUp(position.row),
 				left: scaleUp(position.column),
 				flipX: true
 			});
-			super(position, imgInstance);
+			super(board, position, imgInstance);
 		}
 	}
 
@@ -276,13 +292,13 @@ module Pacmagurian {
 					var position = new Position(row, column);
 					switch(cell) {
 						case Cell.Player:
-							characters.push(new Player(position));
+							characters.push(new Player(board, position));
 							break;
 						case Cell.Enemy:
-							characters.push(new Enemy(position));
+							characters.push(new Enemy(board, position));
 							break;
 						case Cell.Tard:
-							characters.push(new Tard(position));
+							characters.push(new Tard(board, position));
 							break;
 					}
 				}
