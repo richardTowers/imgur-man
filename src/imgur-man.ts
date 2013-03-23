@@ -4,16 +4,15 @@ module Pacmagurian {
 	'use strict';
 
 	// Let's go with a 20px by 20px grid.
-	// Todo: perhaps we should calculate the scale based on the size of the user's screen?
 	var scale = 20;
 	var offset = scale / 2;
 
 	var scaleUp = (input : number) => input * scale + offset;
 
-	var createImage = (id : string, options: fabric.IObjectOptions) => {
-		var imgElement = <HTMLImageElement>document.getElementById(id);
-		return new fabric.Image(imgElement, options);
-	}
+	var createImage = (id:string, options:fabric.IObjectOptions) => {
+        var imgElement = <HTMLImageElement>document.getElementById(id);
+        return new fabric.Image(imgElement, options);
+    };
 
 	// Dark grey background
 	var backgroundColor = '#222';
@@ -83,7 +82,7 @@ module Pacmagurian {
 		}
 	}
 
-	class Game {
+	export class Game {
 
 		private canvas: fabric.IStaticCanvas;
 		private board: Board;
@@ -109,7 +108,7 @@ module Pacmagurian {
 			// Add the food to the canvas
 			for(counter = 0; counter < this.foods.length; counter++) {
 				var food = this.foods[counter];
-				this.canvas.add(food.image);
+                this.canvas.add(<fabric.IObject>(food.image));
 			}
 
 			// Add the characters to the canvas
@@ -234,7 +233,7 @@ module Pacmagurian {
 				left: scaleUp(position.column),
 				flipX: true
 			});
-			super(board, position, imgInstance);
+			super(board, position, <fabric.IObject>imgInstance);
 		}
 	}
 
@@ -246,7 +245,7 @@ module Pacmagurian {
 				left: scaleUp(position.column),
 				flipX: true
 			});
-			super(board, position, imgInstance);
+			super(board, position, <fabric.IObject>imgInstance);
 		}
 	}
 
@@ -271,12 +270,12 @@ module Pacmagurian {
 			var imgElement = <HTMLImageElement>document.getElementById('maze');
 			var imgInstance = new fabric.Image(imgElement, {
 					top: board.heightInBlocks * scale / 2,
-					left: board.widthInBlocks * scale / 2,
+					left: board.widthInBlocks * scale / 2
 				});
 
 			canvas.add(imgInstance);
 
-			return new Game(canvas, board, foods, characters);
+			return new Game(<fabric.IStaticCanvas>canvas, board, foods, characters);
 
 		}
 
