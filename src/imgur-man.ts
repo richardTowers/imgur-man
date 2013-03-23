@@ -14,9 +14,6 @@ module Pacmagurian {
         return new fabric.Image(imgElement, options);
     };
 
-	// Dark grey background
-	var backgroundColor = '#222';
-
 	// The Maze
 	var mazeSource = [
 		'############################',
@@ -82,10 +79,9 @@ module Pacmagurian {
 		}
 	}
 
-	export class Game {
+	class Game {
 
 		private canvas: fabric.IStaticCanvas;
-		private board: Board;
 		private foods: Food[];
 		private characters: Character[];
 
@@ -95,11 +91,11 @@ module Pacmagurian {
 			foods: Food[],
 			characters: Character[]) {
 
-			this.canvas = canvas;
-			this.board = board;
-			this.foods = foods;
-			this.characters = characters;
-		}
+            this.canvas = canvas;
+            var board:Board = board;
+            this.foods = foods;
+            this.characters = characters;
+        }
 
 		initialize() {
 
@@ -263,7 +259,7 @@ module Pacmagurian {
 			var characters = this.createCharacters(board);
 
 			// Initialize canvas:
-			var canvas = new fabric.StaticCanvas('canvas', { backgroundColor: backgroundColor });
+			var canvas = new fabric.StaticCanvas('canvas');
 			canvas.setWidth(board.widthInBlocks * scale);
 			canvas.setHeight(board.heightInBlocks * scale);
 
