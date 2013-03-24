@@ -1,4 +1,4 @@
-///<reference path="fabricjs.d.ts"/>
+///<reference path="../lib/fabricjs.d.ts"/>
 
 module Pacmagurian {
 	'use strict';

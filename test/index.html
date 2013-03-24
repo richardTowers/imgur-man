@@ -5,7 +5,10 @@
 	<title>Imgur-Man Tests</title>
 	<link rel="stylesheet" href="qunit/qunit.css">
 	<script src="qunit/qunit.js"></script>
-	<script src="boardTests.js"></script>
+    <script src="../lib/require.js"></script>
+    <script>
+        require(['mapBuilderTests', 'boardTests']);
+    </script>
 </head>
 <body>
 	<div id="qunit"></div>

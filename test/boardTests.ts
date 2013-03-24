@@ -1,46 +1,64 @@
 ///<reference path="qunit/qunit.d.ts"/>
 
-(function () {
-    'use strict';
+'use strict';
 
-    QUnit.module('Board');
+import types = module ('../src/types');
+import board = module('../src/Board/board');
+import mapBuilder = module('../src/Board/mapBuilder');
 
-    QUnit.test(
-        'When update is called `move` should be called on each of the characters.',
-        (assert) => {
+QUnit.module('Board');
 
-            assert.equal(1, 2);
+QUnit.test(
+    'When update is called `move` should be called on each of the characters.',
+    (assert) => {
 
-        }
-    );
+        var map = mapBuilder.buildMap([
+            '###',
+            '#.#',
+            '###'
+        ]);
 
-    QUnit.test(
-        'When the player is on the same tile as some food, the player should eat the food.',
-        (assert) => {
+        var player = <types.ICharacter>{};
+        var enemies = [
+            <types.ICharacter>{},
+            <types.ICharacter>{},
+            <types.ICharacter>{},
+            <types.ICharacter>{}
+        ];
 
-            assert.equal(1, 2);
+        var testBoard = new board.Board(map, player, enemies);
 
-        }
-    );
+        testBoard.update();
 
-    QUnit.test(
-        'When the player is on the same tile as an enemy in normal game state, the player should die.',
-        (assert) => {
+        assert.equal(1, 2);
 
-            assert.equal(1, 2);
+    }
+);
 
-        }
-    );
+QUnit.test(
+    'When the player is on the same tile as some food, the player should eat the food.',
+    (assert) => {
+
+        assert.equal(1, 2);
+
+    }
+);
+
+QUnit.test(
+    'When the player is on the same tile as an enemy in normal game state, the player should die.',
+    (assert) => {
+
+        assert.equal(1, 2);
+
+    }
+);
 
 
-    QUnit.test(
-        'When the player is on the same tile as an enemy in powerup game state, the enemy should die.',
-        (assert) => {
+QUnit.test(
+    'When the player is on the same tile as an enemy in powerup game state, the enemy should die.',
+    (assert) => {
 
-            assert.equal(1, 2);
+        assert.equal(1, 2);
 
-        }
-    );
-
-
-}) ();
+    }
+);
