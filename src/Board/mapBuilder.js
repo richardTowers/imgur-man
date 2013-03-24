@@ -20,17 +20,17 @@ define(["require", "exports", '../types'], function(require, exports, __types__)
 types.Tile
                 switch(sourceCell) {
                     case ' ': {
-                        outputCell = new types.Tile(false, false, []);
+                        outputCell = new types.Tile(false, false);
                         break;
 
                     }
                     case '#': {
-                        outputCell = new types.Tile(true, false, []);
+                        outputCell = new types.Tile(true, false);
                         break;
 
                     }
                     case '.': {
-                        outputCell = new types.Tile(false, true, []);
+                        outputCell = new types.Tile(false, true);
                         break;
 
                     }

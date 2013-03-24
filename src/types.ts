@@ -35,11 +35,9 @@ export interface ICharacter{
 export class Tile {
     isWall : bool;
     containsFood : bool;
-    occupants : ICharacter[];
 
-    constructor(isWall : bool, containsFood : bool, occupants : ICharacter[]) {
+    constructor(isWall : bool, containsFood : bool) {
         this.isWall = isWall;
         this.containsFood = containsFood;
-        this.occupants = occupants;
     }
 }

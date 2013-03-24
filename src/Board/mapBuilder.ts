@@ -22,13 +22,13 @@ export function buildMap(source: string[]) : types.Tile[][] {
             outputCell : types.Tile;
             switch(sourceCell) {
                 case ' ':
-                    outputCell = new types.Tile(false, false, []);
+                    outputCell = new types.Tile(false, false);
                     break;
                 case '#':
-                    outputCell = new types.Tile(true, false, []);
+                    outputCell = new types.Tile(true, false);
                     break;
                 case '.':
-                    outputCell = new types.Tile(false, true, []);
+                    outputCell = new types.Tile(false, true);
                     break;
                 default:
                     throw '"' + sourceCell + '" is not an allowed cell type.';

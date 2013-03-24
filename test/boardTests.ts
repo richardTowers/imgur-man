@@ -8,6 +8,22 @@ import mapBuilder = module('../src/Board/mapBuilder');
 
 QUnit.module('Board');
 
+class MockCharacter implements types.ICharacter {
+
+    constructor() {
+        this.position = new types.Position(0,0);
+    }
+
+    move(allowedDirections: types.Vector[]){
+        this.moved = true;
+    }
+    currentDirection : types.Vector;
+    position : types.Position;
+
+    moved : bool = false;
+
+}
+
 QUnit.test(
     'When update is called `move` should be called on each of the characters.',
     (assert) => {
@@ -18,19 +34,26 @@ QUnit.test(
             '###'
         ]);
 
-        var player = <types.ICharacter>{};
+        var player = new MockCharacter();
         var enemies = [
-            <types.ICharacter>{},
-            <types.ICharacter>{},
-            <types.ICharacter>{},
-            <types.ICharacter>{}
+            new MockCharacter(),
+            new MockCharacter(),
+            new MockCharacter(),
+            new MockCharacter()
         ];
 
-        var testBoard = new board.Board(map, player, enemies);
+        var testBoard = new board.Board(map, 20, player, enemies);
 
         testBoard.update();
 
-        assert.equal(1, 2);
+        assert.ok(player.moved, 'Player should have moved');
+        assert.ok(
+            enemies[0].moved &&
+            enemies[1].moved &&
+            enemies[2].moved &&
+            enemies[3].moved,
+            'All the enemies should have moved.'
+        );
 
     }
 );

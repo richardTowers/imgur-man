@@ -20,10 +20,9 @@ define(["require", "exports"], function(require, exports) {
     })();
     exports.Position = Position;    
     var Tile = (function () {
-        function Tile(isWall, containsFood, occupants) {
+        function Tile(isWall, containsFood) {
             this.isWall = isWall;
             this.containsFood = containsFood;
-            this.occupants = occupants;
         }
         return Tile;
     })();
