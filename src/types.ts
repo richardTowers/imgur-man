@@ -27,7 +27,18 @@ export class Position{
 }
 
 export interface ICharacter{
-    move(allowedDirections: Vector[]);
+    currentDirection : Vector;
+    position : Position;
+}
+
+export class Player implements ICharacter {
+    move(allowedDirections: Vector[]) : void { throw 'Method is abstract.'; }
+    currentDirection : Vector;
+    position : Position;
+}
+
+export class Enemy implements ICharacter {
+    move(allowedDirections: Vector[], target: Position) : void { throw 'Method is abstract.'; }
     currentDirection : Vector;
     position : Position;
 }

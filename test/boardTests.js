@@ -1,3 +1,8 @@
+var __extends = this.__extends || function (d, b) {
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+}
 define(["require", "exports", '../src/types', '../src/Board/board', '../src/Board/mapBuilder'], function(require, exports, __types__, __board__, __mapBuilder__) {
     'use strict';
     var types = __types__;
@@ -6,35 +11,58 @@ define(["require", "exports", '../src/types', '../src/Board/board', '../src/Boar
 
     var mapBuilder = __mapBuilder__;
 
-    QUnit.module('Board');
-    var MockCharacter = (function () {
-        function MockCharacter(xPos, yPos) {
+    var MockPlayer = (function (_super) {
+        __extends(MockPlayer, _super);
+        function MockPlayer(xPos, yPos) {
+                _super.call(this);
             this.position = new types.Position(xPos, yPos);
         }
-        MockCharacter.prototype.move = function (allowedDirections) {
+        MockPlayer.prototype.move = function (allowedDirections) {
         };
-        return MockCharacter;
-    })();    
+        return MockPlayer;
+    })(types.Player);    
+    var MockEnemy = (function (_super) {
+        __extends(MockEnemy, _super);
+        function MockEnemy(xPos, yPos) {
+                _super.call(this);
+            this.position = new types.Position(xPos, yPos);
+        }
+        MockEnemy.prototype.move = function (allowedDirections, target) {
+        };
+        return MockEnemy;
+    })(types.Enemy);    
+    QUnit.module('Board');
     QUnit.test('When update is called `move` should be called on each of the characters.', function (assert) {
         var map = mapBuilder.buildMap([
             '###', 
             '#.#', 
             '###'
         ]);
-        var player = new MockCharacter(1, 1);
+        var player = new MockPlayer(1, 1);
         var spyPlayer = sinon.spy(player, 'move');
         var enemies = [
-            new MockCharacter(1, 1), 
-            new MockCharacter(1, 1), 
-            new MockCharacter(1, 1), 
-            new MockCharacter(1, 1)
-        ];
-        var spyEnemies = [
-            sinon.spy(enemies[0], 'move'), 
-            sinon.spy(enemies[1], 'move'), 
-            sinon.spy(enemies[2], 'move'), 
-            sinon.spy(enemies[3], 'move')
-        ];
+            [
+                1, 
+                1
+            ], 
+            [
+                1, 
+                1
+            ], 
+            [
+                1, 
+                1
+            ], 
+            [
+                1, 
+                1
+            ]
+        ].map(function (x) {
+            return new MockEnemy(x[0], x[1]);
+        });
+        var spyEnemies = enemies.map(function (x) {
+            return sinon.spy(x, 'move');
+        });
         var testBoard = new board.Board(map, 20, player, enemies);
         testBoard.update();
         assert.ok(spyPlayer.calledOnce, 'Player should have moved.');

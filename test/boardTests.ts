@@ -7,16 +7,22 @@ import types = module ('../src/types');
 import board = module('../src/Board/board');
 import mapBuilder = module('../src/Board/mapBuilder');
 
-QUnit.module('Board');
-
-class MockCharacter implements types.ICharacter {
+class MockPlayer extends types.Player {
     constructor(xPos: number, yPos: number) {
+        super();
         this.position = new types.Position(xPos, yPos);
     }
-    move(allowedDirections: types.Vector[]) { }
-    currentDirection : types.Vector;
-    position : types.Position;
+    move(allowedDirections: types.Vector[]) : void { }
 }
+class MockEnemy extends types.Enemy {
+    constructor(xPos: number, yPos: number) {
+        super();
+        this.position = new types.Position(xPos, yPos);
+    }
+    move(allowedDirections: types.Vector[], target: types.Position) : void { }
+}
+
+QUnit.module('Board');
 
 QUnit.test(
     'When update is called `move` should be called on each of the characters.',
@@ -28,20 +34,13 @@ QUnit.test(
             '###'
         ]);
 
-        var player = new MockCharacter(1,1);
+        // Create a player on the middle tile:
+        var player = new MockPlayer(1,1);
         var spyPlayer = sinon.spy(player, 'move');
-        var enemies = [
-            new MockCharacter(1,1),
-            new MockCharacter(1,1),
-            new MockCharacter(1,1),
-            new MockCharacter(1,1)
-        ];
-        var spyEnemies = [
-            sinon.spy(enemies[0], 'move'),
-            sinon.spy(enemies[1], 'move'),
-            sinon.spy(enemies[2], 'move'),
-            sinon.spy(enemies[3], 'move')
-        ];
+
+        // Stick four enemies on the middle tile:
+        var enemies = [[1,1],[1,1],[1,1],[1,1]].map(x => new MockEnemy(x[0], x[1]));
+        var spyEnemies = enemies.map(x => sinon.spy(x, 'move'));
 
         var testBoard = new board.Board(map, 20, player, enemies);
 

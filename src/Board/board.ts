@@ -18,14 +18,14 @@ export class Board {
     width : number;
     height : number;
     scale : number;
-    player : types.ICharacter;
-    enemies : types.ICharacter[];
+    player : types.Player;
+    enemies : types.Enemy[];
 
     constructor (
         map: types.Tile[][],
         scale: number,
-        player: types.ICharacter,
-        enemies: types.ICharacter[]) {
+        player: types.Player,
+        enemies: types.Enemy[]) {
 
             this.map = map;
 
@@ -56,7 +56,7 @@ export class Board {
             var enemy = this.enemies[i];
             allowedDirections = this.getAllowedDirections(enemy);
 
-            this.enemies[i].move(allowedDirections);
+            this.enemies[i].move(allowedDirections, this.player.position);
         }
     }
 

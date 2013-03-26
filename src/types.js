@@ -19,6 +19,22 @@ define(["require", "exports"], function(require, exports) {
         return Position;
     })();
     exports.Position = Position;    
+    var Player = (function () {
+        function Player() { }
+        Player.prototype.move = function (allowedDirections) {
+            throw 'Method is abstract.';
+        };
+        return Player;
+    })();
+    exports.Player = Player;    
+    var Enemy = (function () {
+        function Enemy() { }
+        Enemy.prototype.move = function (allowedDirections, target) {
+            throw 'Method is abstract.';
+        };
+        return Enemy;
+    })();
+    exports.Enemy = Enemy;    
     var Tile = (function () {
         function Tile(isWall, containsFood) {
             this.isWall = isWall;

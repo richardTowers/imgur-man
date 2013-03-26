@@ -43,11 +43,11 @@ function buildMap() : types.Tile[][] {
     return mapBuilder.buildMap(mazeSource);
 }
 
-function buildPlayer() : types.ICharacter {
-    return <types.ICharacter>{};
+function buildPlayer() : types.IEnemy {
+    return <types.IEnemy>{};
 }
 
-function buildEnemies() : types.ICharacter[] {
+function buildEnemies() : types.IEnemy[] {
     return [];
 }
 

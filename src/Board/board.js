@@ -29,7 +29,7 @@ define(["require", "exports", '../types'], function(require, exports, __types__)
             for(var i = 0; i < this.enemies.length; i++) {
                 var enemy = this.enemies[i];
                 allowedDirections = this.getAllowedDirections(enemy);
-                this.enemies[i].move(allowedDirections);
+                this.enemies[i].move(allowedDirections, this.player.position);
             }
         };
         Board.prototype.getAllowedDirections = function (character) {
