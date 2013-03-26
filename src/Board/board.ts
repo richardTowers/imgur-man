@@ -102,9 +102,8 @@ export class Board {
     }
 
     /**
-     * Returns a value that is guaranteed to be between 0 and limit by wrapping
-     * any values less than `0` to `limit - 1` and any values greater than or equal
-     * to `limit` to `0`.
+     * Returns a value between 0 and `limit` by wrapping any values less than `0`
+     * to `limit - 1` and any values greater than or equal to `limit` to `0`.
      *
      * @param value
      * @param limit
