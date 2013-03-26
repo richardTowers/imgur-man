@@ -1,4 +1,5 @@
-///<reference path="qunit/qunit.d.ts"/>
+///<reference path="lib/qunit.d.ts"/>
+///<reference path="lib/sinon.d.ts"/>
 
 'use strict';
 
@@ -9,19 +10,12 @@ import mapBuilder = module('../src/Board/mapBuilder');
 QUnit.module('Board');
 
 class MockCharacter implements types.ICharacter {
-
-    constructor() {
-        this.position = new types.Position(0,0);
+    constructor(xPos: number, yPos: number) {
+        this.position = new types.Position(xPos, yPos);
     }
-
-    move(allowedDirections: types.Vector[]){
-        this.moved = true;
-    }
+    move(allowedDirections: types.Vector[]) { }
     currentDirection : types.Vector;
     position : types.Position;
-
-    moved : bool = false;
-
 }
 
 QUnit.test(
@@ -34,54 +28,26 @@ QUnit.test(
             '###'
         ]);
 
-        var player = new MockCharacter();
+        var player = new MockCharacter(1,1);
+        var spyPlayer = sinon.spy(player, 'move');
         var enemies = [
-            new MockCharacter(),
-            new MockCharacter(),
-            new MockCharacter(),
-            new MockCharacter()
+            new MockCharacter(1,1),
+            new MockCharacter(1,1),
+            new MockCharacter(1,1),
+            new MockCharacter(1,1)
+        ];
+        var spyEnemies = [
+            sinon.spy(enemies[0], 'move'),
+            sinon.spy(enemies[1], 'move'),
+            sinon.spy(enemies[2], 'move'),
+            sinon.spy(enemies[3], 'move')
         ];
 
         var testBoard = new board.Board(map, 20, player, enemies);
 
         testBoard.update();
 
-        assert.ok(player.moved, 'Player should have moved');
-        assert.ok(
-            enemies[0].moved &&
-            enemies[1].moved &&
-            enemies[2].moved &&
-            enemies[3].moved,
-            'All the enemies should have moved.'
-        );
-
-    }
-);
-
-QUnit.test(
-    'When the player is on the same tile as some food, the player should eat the food.',
-    (assert) => {
-
-        assert.equal(1, 2);
-
-    }
-);
-
-QUnit.test(
-    'When the player is on the same tile as an enemy in normal game state, the player should die.',
-    (assert) => {
-
-        assert.equal(1, 2);
-
-    }
-);
-
-
-QUnit.test(
-    'When the player is on the same tile as an enemy in powerup game state, the enemy should die.',
-    (assert) => {
-
-        assert.equal(1, 2);
-
+        assert.ok(spyPlayer.calledOnce, 'Player should have moved.');
+        assert.ok(spyEnemies.every(x => x.calledOnce), 'All enemies should have moved.');
     }
 );

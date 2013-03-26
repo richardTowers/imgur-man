@@ -8,12 +8,10 @@ define(["require", "exports", '../src/types', '../src/Board/board', '../src/Boar
 
     QUnit.module('Board');
     var MockCharacter = (function () {
-        function MockCharacter() {
-            this.moved = false;
-            this.position = new types.Position(0, 0);
+        function MockCharacter(xPos, yPos) {
+            this.position = new types.Position(xPos, yPos);
         }
         MockCharacter.prototype.move = function (allowedDirections) {
-            this.moved = true;
         };
         return MockCharacter;
     })();    
@@ -23,26 +21,26 @@ define(["require", "exports", '../src/types', '../src/Board/board', '../src/Boar
             '#.#', 
             '###'
         ]);
-        var player = new MockCharacter();
+        var player = new MockCharacter(1, 1);
+        var spyPlayer = sinon.spy(player, 'move');
         var enemies = [
-            new MockCharacter(), 
-            new MockCharacter(), 
-            new MockCharacter(), 
-            new MockCharacter()
+            new MockCharacter(1, 1), 
+            new MockCharacter(1, 1), 
+            new MockCharacter(1, 1), 
+            new MockCharacter(1, 1)
+        ];
+        var spyEnemies = [
+            sinon.spy(enemies[0], 'move'), 
+            sinon.spy(enemies[1], 'move'), 
+            sinon.spy(enemies[2], 'move'), 
+            sinon.spy(enemies[3], 'move')
         ];
         var testBoard = new board.Board(map, 20, player, enemies);
         testBoard.update();
-        assert.ok(player.moved, 'Player should have moved');
-        assert.ok(enemies[0].moved && enemies[1].moved && enemies[2].moved && enemies[3].moved, 'All the enemies should have moved.');
-    });
-    QUnit.test('When the player is on the same tile as some food, the player should eat the food.', function (assert) {
-        assert.equal(1, 2);
-    });
-    QUnit.test('When the player is on the same tile as an enemy in normal game state, the player should die.', function (assert) {
-        assert.equal(1, 2);
-    });
-    QUnit.test('When the player is on the same tile as an enemy in powerup game state, the enemy should die.', function (assert) {
-        assert.equal(1, 2);
+        assert.ok(spyPlayer.calledOnce, 'Player should have moved.');
+        assert.ok(spyEnemies.every(function (x) {
+            return x.calledOnce;
+        }), 'All enemies should have moved.');
     });
 })
 
