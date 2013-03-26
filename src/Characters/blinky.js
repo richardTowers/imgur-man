@@ -14,7 +14,8 @@ define(["require", "exports", '../types'], function(require, exports, __types__)
         Blinky.prototype.move = function () {
         };
         return Blinky;
-    })(types.Enemy);    
+    })(types.Enemy);
+    exports.Blinky = Blinky;    
 })
 
 //@ sourceMappingURL=blinky.js.map
