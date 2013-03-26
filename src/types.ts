@@ -24,6 +24,20 @@ export class Position{
     add(vector: Vector) : Position {
         return new Position(this.x + vector.dx, this.y + vector.dy);
     }
+
+    /**
+     * The square of the distance between this position and the target position.
+     * No need to root it to get the actual distance since we only need to compare.
+     *
+     * @param position
+     * @returns {number}
+     */
+    squareDistanceTo(position: Position) {
+        var xDist = this.x - position.x;
+        var yDist = this.y - position.y;
+
+        return xDist*xDist + yDist*yDist;
+    }
 }
 
 export interface ICharacter{

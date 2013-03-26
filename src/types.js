@@ -16,6 +16,11 @@ define(["require", "exports"], function(require, exports) {
         Position.prototype.add = function (vector) {
             return new Position(this.x + vector.dx, this.y + vector.dy);
         };
+        Position.prototype.squareDistanceTo = function (position) {
+            var xDist = this.x - position.x;
+            var yDist = this.y - position.y;
+            return xDist * xDist + yDist * yDist;
+        };
         return Position;
     })();
     exports.Position = Position;    

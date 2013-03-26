@@ -1,4 +1,4 @@
-///<reference path="qunit/qunit.d.ts"/>
+///<reference path="lib/qunit.d.ts"/>
 
 'use strict';
 

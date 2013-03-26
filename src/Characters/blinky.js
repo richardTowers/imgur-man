@@ -8,10 +8,25 @@ define(["require", "exports", '../types'], function(require, exports, __types__)
 
     var Blinky = (function (_super) {
         __extends(Blinky, _super);
-        function Blinky() {
+        function Blinky(currentDirection, position) {
                 _super.call(this);
+            this.currentDirection = currentDirection;
+            this.position = position;
         }
-        Blinky.prototype.move = function () {
+        Blinky.prototype.move = function (allowedDirections, targetTile) {
+            var minDistance = 1000000000;
+            var direction;
+
+            for(var i = 0; i < allowedDirections.length; i++) {
+                var candidateDirection = allowedDirections[i];
+                var newPosition = this.position.add(candidateDirection);
+                var distance = newPosition.squareDistanceTo(targetTile);
+                if(distance < minDistance) {
+                    minDistance = distance;
+                    direction = candidateDirection;
+                }
+            }
+            this.position = this.position.add(direction);
         };
         return Blinky;
     })(types.Enemy);
