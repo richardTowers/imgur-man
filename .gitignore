@@ -7,3 +7,4 @@ apikey.txt
 imgur-man/bin
 imgur-man/obj
 *.suo
+*.user
