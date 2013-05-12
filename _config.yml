@@ -4,7 +4,7 @@ server:      false
 server_port: 4000
 url: http://localhost:4000
 
-source:      .
+source:      ./imgur-man
 destination: ./_site
 plugins:     ./_plugins
 

@@ -1,0 +1,27 @@
+﻿<!doctype html>
+<html>
+	<head>
+		<title>imgur-man</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+	</head>	
+	<body>
+		<!-- Single canvas to render the game in: -->
+		<canvas id="canvas" width="560" height="620">
+			Your browser doesn't support canvas, fool!
+		</canvas>
+
+		<!-- Load some images up for the game, but hide them: -->
+		<div class="hide">
+			<img src="img/pacmagurian-open.png" id="pacmagurian">
+			<img src="img/pactard.png" id="pactard">
+			<img src="img/maze.png" id="maze">
+			<img src="img/downvote.png" id="downvote">
+		</div>
+
+		<!-- Dependencies (Todo: requireJS) -->
+		<script src="lib/fabric.min.js"></script>
+
+		<!-- Time for the magic: -->
+		<script src="app.js"></script>
+	</body>
+</html>

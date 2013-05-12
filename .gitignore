@@ -3,3 +3,7 @@ _site
 .DS_Store
 .idea
 apikey.txt
+
+imgur-man/bin
+imgur-man/obj
+*.suo
