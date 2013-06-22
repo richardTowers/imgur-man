@@ -659,18 +659,18 @@ declare module fabric {
     export interface ITriangleOptions extends IObjectOptions {
     }
 
-    declare var Rect: {
+    var Rect: {
         fromElement(element: SVGElement, options: IRectOptions): IRect;
         fromObject(object): IRect;
         new (options?: IRectOptions): IRect;
         prototype: any;
     }
 
-    declare var Triangle: {
+    var Triangle: {
         new (options?: ITriangleOptions): ITriangle;
     }
 
-    declare var Canvas: {
+    var Canvas: {
         new (element: HTMLCanvasElement, options?: ICanvasOptions): ICanvas;
         new (element: string, options?: ICanvasOptions): ICanvas;
 
@@ -679,7 +679,7 @@ declare module fabric {
         prototype: any;
     }
 
-    declare var StaticCanvas: {
+    var StaticCanvas: {
         new (element: HTMLCanvasElement, options?: ICanvasOptions): ICanvas;
         new (element: string, options?: ICanvasOptions): ICanvas;
 
@@ -688,7 +688,7 @@ declare module fabric {
         prototype: any;
     }
 
-    declare var Circle: {
+    var Circle: {
         ATTRIBUTE_NAMES: string[];
         fromElement(element: SVGElement, options: ICircleOptions): ICircle;
         fromObject(object): ICircle;
@@ -696,11 +696,11 @@ declare module fabric {
         prototype: any;
     }
 
-    declare var Group: {
+    var Group: {
         new (items?: any[], options?: IObjectOptions): IGroup;
     }
 
-    declare var Line: {
+    var Line: {
         ATTRIBUTE_NAMES: string[];
         fromElement(element: SVGElement, options): ILine;
         fromObject(object): ILine;
@@ -708,53 +708,53 @@ declare module fabric {
         new (points: number[], objObjects?: IObjectOptions): ILine;
     }
 
-    declare var Intersection: {
+    var Intersection: {
         intersectLineLine(a1, a2, b1, b2);
         intersectLinePolygon(a1, a2, points);
         intersectPolygonPolygon(points1, points2);
         intersectPolygonRectangle(points, r1, r2);
     }
 
-    declare var Path: {
+    var Path: {
         fromElement(element: SVGElement, options): IPath;
         fromObject(object): IPath;
         new (): IPath;
     }
 
-    declare var PathGroup: {
+    var PathGroup: {
         fromObject(object): IPathGroup;
         new (): IPathGroup;
         prototype: any;
     }
 
-    declare var Point: {
+    var Point: {
         new (x, y): IPoint;
         prototype: any;
     }
 
-    declare var Object: {
+    var Object: {
         prototype: any;
     }
 
-    declare var Polygon: {
+    var Polygon: {
         fromObject(object): IPolygon;
         fromElement(element: SVGElement, options): IPolygon;
         new (): IPolygon;
         prototype: any;
     }
 
-    declare var Polyline: {
+    var Polyline: {
         fromObject(object): IPolyline;
         fromElement(element: SVGElement, options): IPolyline;
         new (): IPolyline;
         prototype: any;
     }
 
-    declare var Text: {
+    var Text: {
         new (text: string, options?: ITextOptions): IText;
     }
 
-    declare var Image: {
+    var Image: {
         fromURL(url: string): IImage;
         fromURL(url: string, callback: (image: IImage) => any): IImage;
         fromURL(url: string, callback: (image: IImage) => any, objObjects: IObjectOptions): IImage;
@@ -808,7 +808,7 @@ declare module fabric {
 
     }
 
-    declare var util: {
+    var util: {
         addClass(element: HTMLElement, className: string);
         addListener(element, eventName: string, handler);
         animate(options: {
@@ -845,5 +845,5 @@ declare module fabric {
         toFixed(number, fractionDigits);
         wrapElement(element: HTMLElement, wrapper, attributes);
     }
-};
+}
 

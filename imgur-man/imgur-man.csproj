@@ -16,6 +16,10 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="board.ts" />
+    <Content Include="board.js">
+      <DependentUpon>board.ts</DependentUpon>
+    </Content>
     <Content Include="css\bootstrap.min.css" />
     <Content Include="img\downvote.png" />
     <Content Include="img\maze.png" />
