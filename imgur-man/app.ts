@@ -1,6 +1,7 @@
 ///<reference path="lib/fabricjs.d.ts" />
 ///<reference path="board.ts" />
 
+
 interface gameState {
 	board: board.Board;
 	hero: any;
@@ -31,10 +32,8 @@ function initialiseState() : gameState {
 	// Create the board:
 	var theBoard = new board.Board(mazeSource);
 
-	var scale = x => 10 + x * 20;
-
 	var ghosts = [];
-	var hero = { top: 470, left: 280 };
+	var hero = { top: 23, left: 13.5 };
 
 	var food = [];
 	for (var rowNum = 0; rowNum < mazeSource.length; rowNum++) {
@@ -43,15 +42,15 @@ function initialiseState() : gameState {
 			switch (row[colNum]) {
 				case '.':
 					food.push({
-						top: scale(rowNum),
-						left: scale(colNum),
+						top: rowNum,
+						left: colNum,
 						value: 10
 					});
 					break;
 				case 'o':
 					food.push({
-						top: scale(rowNum),
-						left: scale(colNum),
+						top: rowNum,
+						left: colNum,
 						value: 50
 					});
 					break;
@@ -81,20 +80,21 @@ function initialiseDrawing(width: number, height: number, state: gameState) : dr
 		});
 	canvas.add(maze);
 
+	var scale = x => 10 + x * 20;
+
 	// Load our hero:
 	var heroImg = <HTMLImageElement>document.getElementById('pacmagurian');
 	var hero = new fabric.Image(
-		heroImg,
-		{
-			top: state.hero.top,
-			left: state.hero.left,
+		heroImg, {
+			top: scale(state.hero.top),
+			left: scale(state.hero.left),
 			flipX: true
 		});
 	canvas.add(hero);
 
 	var food = state.food.map(x => new fabric.Circle({
-		top: x.top,
-		left: x.left,
+		top: scale(x.top),
+		left: scale(x.left),
 		radius: 5,
 		fill: '#0f0'
 	}));
@@ -113,7 +113,7 @@ function draw(drawing: drawingState, state: gameState) {
 	drawing.canvas.renderAll();
 }
 
-(function () {
+(function main () {
 
 	var width = 560;
 	var height = 620;
