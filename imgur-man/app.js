@@ -40,24 +40,24 @@ function initialiseState() {
     var ghosts = [];
     var hero = { top: 23, left: 13.5 };
 
-    var food = [];
+    var food = {};
     for (var rowNum = 0; rowNum < mazeSource.length; rowNum++) {
         var row = mazeSource[rowNum];
         for (var colNum = 0; colNum < row.length; colNum++) {
             switch (row[colNum]) {
                 case '.':
-                    food.push({
+                    food['r' + rowNum + 'c' + colNum] = {
                         top: rowNum,
                         left: colNum,
                         value: 10
-                    });
+                    };
                     break;
                 case 'o':
-                    food.push({
+                    food['r' + rowNum + 'c' + colNum] = {
                         top: rowNum,
                         left: colNum,
                         value: 50
-                    });
+                    };
                     break;
             }
         }
@@ -69,6 +69,10 @@ function initialiseState() {
         ghosts: ghosts,
         hero: hero
     };
+}
+
+function scale(input) {
+    return 10 + input * 20;
 }
 
 function initialiseDrawing(width, height, state) {
@@ -83,23 +87,11 @@ function initialiseDrawing(width, height, state) {
     });
     canvas.add(maze);
 
-    var scale = function (x) {
-        return 10 + x * 20;
-    };
-
-    // Load our hero:
-    var heroImg = document.getElementById('pacmagurian');
-    var hero = new fabric.Image(heroImg, {
-        top: scale(state.hero.top),
-        left: scale(state.hero.left),
-        flipX: true
-    });
-    canvas.add(hero);
-
-    var food = state.food.map(function (x) {
+    var food = Object.keys(state.food).map(function (x) {
+        var foodItem = state.food[x];
         return new fabric.Circle({
-            top: scale(x.top),
-            left: scale(x.left),
+            top: scale(foodItem.top),
+            left: scale(foodItem.left),
             radius: 5,
             fill: '#0f0'
         });
@@ -109,6 +101,11 @@ function initialiseDrawing(width, height, state) {
         return canvas.add(x);
     });
 
+    // Load our hero:
+    var heroImg = document.getElementById('pacmagurian');
+    var hero = new fabric.Image(heroImg, { flipX: true });
+    canvas.add(hero);
+
     return {
         canvas: canvas,
         hero: hero,
@@ -116,20 +113,42 @@ function initialiseDrawing(width, height, state) {
     };
 }
 
+function tick(state, clock) {
+    state.hero.left -= 0.125;
+
+    if (state.hero.left <= 0) {
+        state.hero.left = 27;
+    }
+
+    return state;
+}
+
 function draw(drawing, state) {
+    drawing.hero.left = scale(state.hero.left);
+    drawing.hero.top = scale(state.hero.top);
+
     // Render the canvas:
     drawing.canvas.renderAll();
+
+    return drawing;
 }
 
 (function main() {
     var width = 560;
     var height = 620;
 
+    var clock = 0;
+
     window.onload = function () {
         var gameState = initialiseState();
         var drawingState = initialiseDrawing(width, height, gameState);
 
-        draw(drawingState, gameState);
+        var update = function () {
+            gameState = tick(gameState, clock++);
+            drawingState = draw(drawingState, gameState);
+        };
+
+        window.setInterval(update, 25);
     };
 })();
 //@ sourceMappingURL=app.js.map
