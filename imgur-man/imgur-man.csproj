@@ -21,6 +21,14 @@
       <DependentUpon>board.ts</DependentUpon>
     </Content>
     <Content Include="css\bootstrap.min.css" />
+    <TypeScriptCompile Include="game.ts" />
+    <TypeScriptCompile Include="drawing.ts" />
+    <Content Include="drawing.js">
+      <DependentUpon>drawing.ts</DependentUpon>
+    </Content>
+    <Content Include="game.js">
+      <DependentUpon>game.ts</DependentUpon>
+    </Content>
     <Content Include="img\downvote.png" />
     <Content Include="img\maze.png" />
     <Content Include="img\pacmagurian-open.png" />
