@@ -41,7 +41,12 @@ var game;
         var theBoard = new board.Board(mazeSource);
 
         var ghosts = [];
-        var hero = { top: 23, left: theBoard.widthInBlocks / 2 };
+        var hero = {
+            top: 23,
+            left: theBoard.widthInBlocks / 2,
+            upspeed: 0,
+            leftspeed: 0x1 / 0x8
+        };
 
         var food = {};
         for (var rowNum = 0; rowNum < mazeSource.length; rowNum++) {
@@ -76,7 +81,17 @@ var game;
     game.initialiseState = initialiseState;
 
     function tick(state, clock) {
-        state.hero.left -= 0.125;
+        var newPos = {
+            left: state.hero.left - state.hero.leftspeed,
+            top: state.hero.top - state.hero.upspeed
+        };
+
+        var cell = state.board.getCell(state.hero.upspeed > 0 ? Math.floor(newPos.top) : Math.ceil(newPos.top), state.hero.leftspeed > 0 ? Math.floor(newPos.left) : Math.ceil(newPos.left));
+
+        if (cell !== '#') {
+            state.hero.left = newPos.left;
+            state.hero.top = newPos.top;
+        }
 
         if (state.hero.left <= 0) {
             state.hero.left = state.board.widthInBlocks;

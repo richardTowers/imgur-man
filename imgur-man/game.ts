@@ -7,9 +7,14 @@ module game {
 		left: number;
 	}
 
+	export interface character extends item {
+		upspeed: number;
+		leftspeed: number;
+	}
+
 	export interface state {
 		board: board.Board;
-		hero: item;
+		hero: character;
 		ghosts: item[];
 		food: any;
 	}
@@ -32,7 +37,12 @@ module game {
 		var theBoard = new board.Board(mazeSource);
 
 		var ghosts = [];
-		var hero = { top: 23, left: theBoard.widthInBlocks / 2 };
+		var hero : character = {
+			top: 23,
+			left: theBoard.widthInBlocks / 2,
+			upspeed: 0,
+			leftspeed: 0x1/0x8
+		};
 
 		var food = {};
 		for (var rowNum = 0; rowNum < mazeSource.length; rowNum++) {
@@ -67,8 +77,25 @@ module game {
 
 	export function tick(state: game.state, clock: number): game.state {
 
-		state.hero.left -= 0.125;
-		
+		var newPos = {
+			left: state.hero.left - state.hero.leftspeed,
+			top: state.hero.top - state.hero.upspeed
+		}
+
+		var cell = state.board.getCell(
+			state.hero.upspeed > 0
+				? Math.floor(newPos.top)
+				: Math.ceil(newPos.top),
+			state.hero.leftspeed > 0
+				? Math.floor(newPos.left)
+				: Math.ceil(newPos.left)
+		);
+
+		if (cell !== '#') {
+			state.hero.left = newPos.left;
+			state.hero.top = newPos.top;
+		}
+				
 		if (state.hero.left <= 0) { state.hero.left = state.board.widthInBlocks; }
 		if (state.hero.left > state.board.widthInBlocks) { state.hero.left = 0; }
 		if (state.hero.top <= 0) { state.hero.top = state.board.heightInBlocks; }

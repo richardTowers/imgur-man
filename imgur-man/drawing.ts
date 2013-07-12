@@ -56,6 +56,17 @@ module drawing {
 
 		drawing.hero.left = scale(state.hero.left);
 		drawing.hero.top = scale(state.hero.top);
+		
+		drawing.hero.flipX = (state.hero.leftspeed > 0);
+		if (state.hero.upspeed === 0) {
+			drawing.hero.rotate(0);
+		}
+		else if (state.hero.upspeed > 0) {
+			drawing.hero.rotate(-90);
+		}
+		else if (state.hero.upspeed < 0) {
+			drawing.hero.rotate(90);
+		}
 
 		// Render the canvas:
 		drawing.canvas.renderAll();
