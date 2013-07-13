@@ -17,6 +17,7 @@ module game {
 		hero: character;
 		ghosts: item[];
 		food: any;
+		score: number;
 	}
 
 	function getHash(rowNum: number, colNum: number): string {
@@ -75,7 +76,8 @@ module game {
 			board: theBoard,
 			food: food,
 			ghosts: ghosts,
-			hero: hero
+			hero: hero,
+			score: 0
 		};
 	}
 
@@ -128,18 +130,26 @@ module game {
 			var newFood = {};
 			var hash = getHash(top.coord, left.coord);
 			Object.keys(state.food)
-				.filter(x => x !== hash)
-				.forEach(x => newFood[x] = state.food[x]);
+				.forEach(x => {
+					if (x !== hash) {
+						newFood[x] = state.food[x];
+					}
+					else {
+						state.score += state.food[x].value;
+					}
+				});
 
 			state.food = newFood;
+
+			document.getElementById('score').innerHTML = state.score.toString(10);
 		}
 
 		return state;
 
 	}
 
-	export function handleKeyPress (state : state, event : KeyboardEvent) : state {
-		
+	export function handleKeyPress(state: state, event: KeyboardEvent): game.state {
+
 		// Todo: pull out into settings?
 		var speed = 0.125;
 
@@ -174,7 +184,7 @@ module game {
 		}
 
 		return state;
-	
+
 	};
 
 }

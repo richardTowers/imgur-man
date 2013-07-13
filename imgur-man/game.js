@@ -79,7 +79,8 @@ var game;
             board: theBoard,
             food: food,
             ghosts: ghosts,
-            hero: hero
+            hero: hero,
+            score: 0
         };
     }
     game.initialiseState = initialiseState;
@@ -135,13 +136,17 @@ var game;
 
             var newFood = {};
             var hash = getHash(top.coord, left.coord);
-            Object.keys(state.food).filter(function (x) {
-                return x !== hash;
-            }).forEach(function (x) {
-                return newFood[x] = state.food[x];
+            Object.keys(state.food).forEach(function (x) {
+                if (x !== hash) {
+                    newFood[x] = state.food[x];
+                } else {
+                    state.score += state.food[x].value;
+                }
             });
 
             state.food = newFood;
+
+            document.getElementById('score').innerHTML = state.score.toString(10);
         }
 
         return state;
