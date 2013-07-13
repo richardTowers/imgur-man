@@ -22,26 +22,7 @@
 		};
 
 		window.onkeyup = (event) => {
-			
-			switch (event.keyCode) {
-				case 38: // Up
-					gameState.hero.upspeed = 0x1 / 0x8;
-					gameState.hero.leftspeed = 0;
-					break;
-				case 40: // Down
-					gameState.hero.upspeed = - 0x1 / 0x8;
-					gameState.hero.leftspeed = 0;
-					break;
-				case 37: // Left
-					gameState.hero.upspeed = 0;
-					gameState.hero.leftspeed = 0x1 / 0x8;
-					break;
-				case 39: // Right
-					gameState.hero.upspeed = 0;
-					gameState.hero.leftspeed = - 0x1 / 0x8;
-					break;
-			}
-		
+			gameState = game.handleKeyPress(gameState, event);
 		};
 
 		window.setInterval(update, 25);

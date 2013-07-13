@@ -8,8 +8,8 @@ module game {
 	}
 
 	export interface character extends item {
-		upspeed: number;
-		leftspeed: number;
+		upSpeed: number;
+		leftSpeed: number;
 	}
 
 	export interface state {
@@ -37,11 +37,11 @@ module game {
 		var theBoard = new board.Board(mazeSource);
 
 		var ghosts = [];
-		var hero : character = {
+		var hero: character = {
 			top: 23,
 			left: theBoard.widthInBlocks / 2,
-			upspeed: 0,
-			leftspeed: 0x1/0x8
+			upSpeed: 0,
+			leftSpeed: 0x1 / 0x8
 		};
 
 		var food = {};
@@ -75,34 +75,99 @@ module game {
 		};
 	}
 
+	function getNextPosition(position: number, speed: number) {
+
+		var nextPos = position - speed;
+
+		var nextCoord;
+		if (speed > 0) {
+			nextCoord = Math.floor(nextPos);
+		}
+		else if (speed < 0) {
+			nextCoord = Math.ceil(nextPos);
+		}
+		else {
+			nextCoord = Math.round(nextPos);
+
+			// Speed must be zero in this dimension,
+			// so we should be centered on the coordinate:
+			nextPos = nextCoord;
+		}
+
+		return {
+			position: nextPos,
+			coord: nextCoord
+		};
+	}
+
 	export function tick(state: game.state, clock: number): game.state {
 
-		var newPos = {
-			left: state.hero.left - state.hero.leftspeed,
-			top: state.hero.top - state.hero.upspeed
+		if (state.hero.upSpeed !== 0 && state.hero.leftSpeed !== 0) {
+			throw 'No diagonals please!';
 		}
 
-		var cell = state.board.getCell(
-			state.hero.upspeed > 0
-				? Math.floor(newPos.top)
-				: Math.ceil(newPos.top),
-			state.hero.leftspeed > 0
-				? Math.floor(newPos.left)
-				: Math.ceil(newPos.left)
-		);
+		var top = getNextPosition(state.hero.top, state.hero.upSpeed);
+		var left = getNextPosition(state.hero.left, state.hero.leftSpeed);
+
+		var cell = state.board.getCell(top.coord, left.coord);
 
 		if (cell !== '#') {
-			state.hero.left = newPos.left;
-			state.hero.top = newPos.top;
+
+			state.hero.left = left.position;
+			state.hero.top = top.position;
+
+			if (state.hero.left <= 0) { state.hero.left = state.board.widthInBlocks; }
+			if (state.hero.left > state.board.widthInBlocks) { state.hero.left = 0; }
+			if (state.hero.top <= 0) { state.hero.top = state.board.heightInBlocks; }
+			if (state.hero.top > state.board.heightInBlocks) { state.hero.top = 0; }
+
+			var newFood = {};
+			var hash = 'r' + top.coord + 'c' + left.coord;
+			Object.keys(state.food)
+				.filter(x => x !== hash)
+				.forEach(x => newFood[x] = state.food[x]);
+
+			state.food = newFood;
 		}
-				
-		if (state.hero.left <= 0) { state.hero.left = state.board.widthInBlocks; }
-		if (state.hero.left > state.board.widthInBlocks) { state.hero.left = 0; }
-		if (state.hero.top <= 0) { state.hero.top = state.board.heightInBlocks; }
-		if (state.hero.top > state.board.heightInBlocks) { state.hero.top = 0; }
 
 		return state;
 
 	}
+
+	export function handleKeyPress (state : state, event : KeyboardEvent) : state {
+		
+		var nextUpSpeed, nextLeftSpeed;
+		switch (event.keyCode) {
+			case 38: // Up
+				nextUpSpeed = 0x1 / 0x8;
+				nextLeftSpeed = 0;
+				break;
+			case 40: // Down
+				nextUpSpeed = - 0x1 / 0x8;
+				nextLeftSpeed = 0;
+				break;
+			case 37: // Left
+				nextUpSpeed = 0;
+				nextLeftSpeed = 0x1 / 0x8;
+				break;
+			case 39: // Right
+				nextUpSpeed = 0;
+				nextLeftSpeed = - 0x1 / 0x8;
+				break;
+		}
+
+		var top = getNextPosition(state.hero.top, nextUpSpeed);
+		var left = getNextPosition(state.hero.left, nextLeftSpeed);
+
+		var nextCell = state.board.getCell(top.coord, left.coord);
+
+		if (nextCell !== '#') {
+			state.hero.upSpeed = nextUpSpeed;
+			state.hero.leftSpeed = nextLeftSpeed;
+		}
+
+		return state;
+	
+	};
 
 }
