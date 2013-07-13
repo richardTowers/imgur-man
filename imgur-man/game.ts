@@ -19,6 +19,10 @@ module game {
 		food: any;
 	}
 
+	function getHash(rowNum: number, colNum: number): string {
+		return rowNum + ':' + colNum;
+	}
+
 	export function initialiseState(): game.state {
 
 		// The Maze
@@ -50,14 +54,14 @@ module game {
 			for (var colNum = 0; colNum < row.length; colNum++) {
 				switch (row[colNum]) {
 					case '.':
-						food['r' + rowNum + 'c' + colNum] = {
+						food[getHash(rowNum, colNum)] = {
 							top: rowNum,
 							left: colNum,
 							value: 10
 						};
 						break;
 					case 'o':
-						food['r' + rowNum + 'c' + colNum] = {
+						food[getHash(rowNum, colNum)] = {
 							top: rowNum,
 							left: colNum,
 							value: 50
@@ -89,8 +93,8 @@ module game {
 		else {
 			nextCoord = Math.round(nextPos);
 
-			// Speed must be zero in this dimension,
-			// so we should be centered on the coordinate:
+			// Speed is zero in this dimension,
+			// so we should be centered on this coordinate:
 			nextPos = nextCoord;
 		}
 
@@ -122,7 +126,7 @@ module game {
 			if (state.hero.top > state.board.heightInBlocks) { state.hero.top = 0; }
 
 			var newFood = {};
-			var hash = 'r' + top.coord + 'c' + left.coord;
+			var hash = getHash(top.coord, left.coord);
 			Object.keys(state.food)
 				.filter(x => x !== hash)
 				.forEach(x => newFood[x] = state.food[x]);
