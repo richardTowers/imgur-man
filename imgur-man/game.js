@@ -149,23 +149,26 @@ var game;
     game.tick = tick;
 
     function handleKeyPress(state, event) {
+        // Todo: pull out into settings?
+        var speed = 0.125;
+
         var nextUpSpeed, nextLeftSpeed;
         switch (event.keyCode) {
             case 38:
-                nextUpSpeed = 0x1 / 0x8;
+                nextUpSpeed = speed;
                 nextLeftSpeed = 0;
                 break;
             case 40:
-                nextUpSpeed = -0x1 / 0x8;
+                nextUpSpeed = -speed;
                 nextLeftSpeed = 0;
                 break;
             case 37:
                 nextUpSpeed = 0;
-                nextLeftSpeed = 0x1 / 0x8;
+                nextLeftSpeed = speed;
                 break;
             case 39:
                 nextUpSpeed = 0;
-                nextLeftSpeed = -0x1 / 0x8;
+                nextLeftSpeed = -speed;
                 break;
         }
 

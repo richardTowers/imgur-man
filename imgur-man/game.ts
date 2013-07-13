@@ -140,23 +140,26 @@ module game {
 
 	export function handleKeyPress (state : state, event : KeyboardEvent) : state {
 		
+		// Todo: pull out into settings?
+		var speed = 0.125;
+
 		var nextUpSpeed, nextLeftSpeed;
 		switch (event.keyCode) {
 			case 38: // Up
-				nextUpSpeed = 0x1 / 0x8;
+				nextUpSpeed = speed;
 				nextLeftSpeed = 0;
 				break;
 			case 40: // Down
-				nextUpSpeed = - 0x1 / 0x8;
+				nextUpSpeed = - speed;
 				nextLeftSpeed = 0;
 				break;
 			case 37: // Left
 				nextUpSpeed = 0;
-				nextLeftSpeed = 0x1 / 0x8;
+				nextLeftSpeed = speed;
 				break;
 			case 39: // Right
 				nextUpSpeed = 0;
-				nextLeftSpeed = - 0x1 / 0x8;
+				nextLeftSpeed = - speed;
 				break;
 		}
 
